@@ -8,12 +8,17 @@
 #include "esp_log.h"
 #include "esp_netif.h"
 #include "mqtt_client.h"
+#include "esp_system.h"
+#include "esp_random.h"
+#include "esp_system.h"
+
+
 #include "config.h"
 
 static const char *TAG = "iot_node";
 static esp_mqtt_client_handle_t mqtt_client = NULL;
 
-// Manejador de eventos Wi-Fi
+// Manejador de eventos WiFi
 static void wifi_event_handler(void* arg, esp_event_base_t event_base,
                                int32_t event_id, void* event_data) {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
@@ -28,7 +33,6 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
-// Inicializar WiFi en modo estación
 void wifi_init_sta(void) {
     esp_netif_init();
     esp_event_loop_create_default();
@@ -55,8 +59,9 @@ void wifi_init_sta(void) {
 }
 
 // Manejador de eventos MQTT
-static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event) {
-    switch (event->event_id) {
+void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data) {
+    esp_mqtt_event_handle_t event = event_data;
+    switch ((esp_mqtt_event_id_t)event_id) {
         case MQTT_EVENT_CONNECTED:
             ESP_LOGI(TAG, "🟢 Conectado al broker MQTT");
             break;
@@ -66,17 +71,16 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event) {
         default:
             break;
     }
-    return ESP_OK;
 }
 
 // Inicializar cliente MQTT
 void mqtt_app_start(void) {
-    esp_mqtt_client_config_t mqtt_cfg = {
-        .uri = MQTT_BROKER_URI,
+    const esp_mqtt_client_config_t mqtt_cfg = {
+        .broker.address.uri = MQTT_BROKER_URI
     };
 
     mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
-    esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, mqtt_event_handler_cb, NULL);
+    esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
     esp_mqtt_client_start(mqtt_client);
 }
 
@@ -88,14 +92,18 @@ void app_main(void) {
         nvs_flash_init();
     }
 
-    wifi_init_sta();
-    mqtt_app_start();
+    wifi_init_sta();     // Conexión WiFi
+    mqtt_app_start();    // Conexión MQTT
 
     while (1) {
         if (mqtt_client != NULL) {
             char payload[128];
-            float temperatura = 23.4;
-            float presion = 1013.25;
+
+            // Simular temperatura entre 20.0 y 35.0 °C
+            float temperatura = 20.0 + (esp_random() % 1500) / 100.0;
+
+            // Simular presión entre 980.0 y 1030.0 hPa
+            float presion = 980.0 + (esp_random() % 500) / 10.0;
 
             sprintf(payload,
                 "{\"sensorId\":\"%s\",\"temperatura\":%.2f,\"presion\":%.2f}",
