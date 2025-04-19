@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# IDEs/Editors
+.vscode/
+.idea/
+
+# Environments
+.venv/
+.env.*
+
+# Coverage (si usás testing)
+coverage/
+
+# Build (si luego hacés bundle o transpile)
+dist/
+build/
