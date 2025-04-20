@@ -121,6 +121,6 @@ void app_main(void) {
             ESP_LOGI(TAG, "📤 MQTT publicado. ID=%d, Payload=%s", msg_id, payload);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        vTaskDelay(pdMS_TO_TICKS(30000));
     }
 }

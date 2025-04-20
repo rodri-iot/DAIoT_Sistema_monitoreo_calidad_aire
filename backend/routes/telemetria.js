@@ -16,4 +16,32 @@ router.get('/ultima', async (req, res) => {
   }
 });
 
+// GET /api/telemetria/por-sensor
+router.get('/por-sensor', async (req, res) => {
+    try {
+      const N = parseInt(req.query.limit) || 10;
+  
+      // Obtener los sensorId únicos
+      const sensores = await Telemetria.distinct("sensorId");
+  
+      // Para cada sensor, buscar las últimas N lecturas
+      const data = await Promise.all(sensores.map(async (sensorId) => {
+        const lecturas = await Telemetria.find({ sensorId })
+          .sort({ timestamp: -1 })
+          .limit(N)
+          .exec();
+        return {
+          sensorId,
+          lecturas
+        };
+      }));
+  
+      res.json(data);
+    } catch (err) {
+      console.error("Error en /por-sensor:", err);
+      res.status(500).json({ error: 'Error del servidor' });
+    }
+  });
+  
+
 module.exports = router;

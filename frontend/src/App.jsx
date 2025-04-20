@@ -1,37 +1,41 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react';
+import Navbar from './components/Navbar';
+import Dashboard from './Dashboard';
+
+const API_BASE = import.meta.env.VITE_API_URL;
+const PING_URL = API_BASE.replace('/api', '') + '/ping';
 
 function App() {
-  const [lectura, setLectura] = useState(null)
+  const [brokerStatus, setBrokerStatus] = useState('Desconectado');
 
   useEffect(() => {
-    const fetchData = async () => {
+    const checkBroker = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/telemetria/ultima`)
-        const data = await res.json()
-        setLectura(data)
+        const res = await fetch(PING_URL);
+        const data = await res.json();
+        if (res.ok && data.message == 'pong'){
+          setBrokerStatus('Conectado');
+        } else {
+          setBrokerStatus('Desconectado');
+        }
       } catch (error) {
-        console.error("Error al obtener lectura:", error)
+        setBrokerStatus('Desconectado');
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    checkBroker();
+    const interval = setInterval(checkBroker, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
-      <h1>🌡️ Sistema de Monitoreo IoT</h1>
-      {lectura ? (
-        <div>
-          <p><strong>Sensor:</strong> {lectura.sensorId}</p>
-          <p><strong>Temperatura:</strong> {lectura.temperatura} °C</p>
-          <p><strong>Presión:</strong> {lectura.presion} hPa</p>
-          <p><strong>Última lectura:</strong> {new Date(lectura.timestamp).toLocaleString()}</p>
-        </div>
-      ) : (
-        <p>Cargando datos...</p>
-      )}
-    </div>
-  )
+    <>
+      <Navbar brokerStatus={brokerStatus} />
+      <div className="container">
+        <Dashboard />
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;

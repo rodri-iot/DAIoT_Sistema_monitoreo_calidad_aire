@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chart.js": "^4.4.9",
+    "cors": "^2.8.5",
+    "materialize-css": "^1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

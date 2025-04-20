@@ -1,0 +1,77 @@
+.dashboard-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Sección por sensor */
+.sensor-section {
+  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+    "title title"
+    "card charts";
+  column-gap: 2rem;
+  row-gap: 1.5rem;
+  align-items: start;
+}
+
+/* Título del nodo */
+.sensor-title {
+  grid-area: title;
+  font-weight: bold;
+  color: #c62828;
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+/* Tarjeta con última lectura */
+.sensor-card {
+  grid-area: card;
+  max-width: 100%;
+}
+
+/* Gráficos */
+.sensor-charts {
+  grid-area: charts;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sensor-charts h6 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.sensor-chart canvas {
+  width: 100% !important;
+  max-width: 700px;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+/* Tabs (si usás varios sensores) */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+  .sensor-section {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "card"
+      "charts";
+  }
+
+  .sensor-title {
+    font-size: 1.4rem;
+  }
+}
