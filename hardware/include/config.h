@@ -6,7 +6,7 @@
 #define WIFI_PASS "RTCeibo-4711*"
 
 // MQTT
-#define MQTT_BROKER_URI "mqtt://192.168.0.193"
+#define MQTT_BROKER_URI "mqtts://192.168.0.193:8883"
 #define MQTT_TOPIC_PUB "telemetria/nodo1"
 #define SENSOR_ID "nodo1"
 

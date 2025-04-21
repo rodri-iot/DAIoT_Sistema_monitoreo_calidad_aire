@@ -10,9 +10,11 @@ services:
   mqtt:
     image: eclipse-mosquitto
     ports:
-      - "1883:1883"
+#      - "1883:1883"
+      - "8883:8883"
     volumes:
       - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/certs:/mosquitto/certs
 
   backend:
     build: ./backend
@@ -25,6 +27,7 @@ services:
       - mqtt
     volumes:
       - ./backend:/usr/src/app
+      - ./mosquitto/certs:/usr/src/app/mosquitto/certs
     working_dir: /usr/src/app
     command: npm start
 
