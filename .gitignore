@@ -28,3 +28,8 @@ coverage/
 # Build (si luego hacés bundle o transpile)
 dist/
 build/
+
+# Certificados TLS
+mosquitto/certs/*.key
+mosquitto/certs/*.crt
+hardware/certs/*.h

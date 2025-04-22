@@ -13,6 +13,8 @@
 #include "esp_system.h"
 #include "config.h"
 #include "certs/ca_cert.h"
+#include "certs/client_cert.h"
+#include "certs/client_key.h"
 
 static const char *TAG = "iot_node";
 static esp_mqtt_client_handle_t mqtt_client = NULL;
@@ -75,8 +77,16 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 // Inicializar cliente MQTT
 void mqtt_app_start(void) {
     const esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = MQTT_BROKER_URI,
-        .broker.verification.certificate = ca_cert_pem,
+        .broker = {
+            .address.uri = MQTT_BROKER_URI,
+            .verification.certificate = ca_cert_pem,
+        },
+        .credentials = {
+            .authentication = {
+                .certificate = client_cert_pem,
+                .key = client_key_pem,
+            }
+        }
     };
 
     mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
