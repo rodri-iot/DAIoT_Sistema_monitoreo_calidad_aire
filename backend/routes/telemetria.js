@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Telemetria = require('../models/Telemetria');
 
+// GET /api/telemetria
+router.get('/', (req, res) => {
+    res.status(200).json({ message: 'API de telemetría disponible.' });
+  });  
+
+
 // GET /api/telemetria/ultima
 router.get('/ultima', async (req, res) => {
   try {

@@ -8,13 +8,12 @@ services:
       - mongo_data:/data/db
 
   mqtt:
-    image: eclipse-mosquitto
+    build: ./mosquitto
+    container_name: mqtt
+#    image: eclipse-mosquitto
     ports:
-#      - "1883:1883"
       - "8883:8883"
-    volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/certs:/mosquitto/certs
+    restart: unless-stopped
 
   backend:
     build: ./backend
@@ -27,9 +26,26 @@ services:
       - mqtt
     volumes:
       - ./backend:/usr/src/app
-      - ./mosquitto/certs:/usr/src/app/mosquitto/certs
+      - ./mosquitto/certs:/usr/src/app/certs
     working_dir: /usr/src/app
     command: npm start
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://backend:3000/api
+    #volumes:
+    #  - ./frontend:/app
+    #working_dir: /app
+    #command: npm run dev
+    #stdin_open: true
+    #tty: true
+
 
 volumes:
   mongo_data:

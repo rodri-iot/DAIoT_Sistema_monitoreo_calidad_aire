@@ -32,6 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rutas
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/telemetria', telemetriaRoutes); // ✅ Ruta de API
+app.use('/api/telemetria', telemetriaRoutes);
 
 module.exports = app;

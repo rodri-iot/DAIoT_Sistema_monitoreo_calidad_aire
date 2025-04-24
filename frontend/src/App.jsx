@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Dashboard from './Dashboard';
 
-const API_BASE = import.meta.env.VITE_API_URL;
+const API_BASE = window.env?.VITE_API_URL || 'http://192.168.0.193:3000/api';
 const PING_URL = API_BASE.replace('/api', '') + '/ping';
 
 function App() {

@@ -7,7 +7,7 @@
 
 // MQTT
 #define MQTT_BROKER_URI "mqtts://192.168.0.193:8883"
-#define MQTT_TOPIC_PUB "telemetria/nodo2"
-#define SENSOR_ID "nodo2"
+#define MQTT_TOPIC_PUB "telemetria/nodo1"
+#define SENSOR_ID "nodo1"
 
 #endif

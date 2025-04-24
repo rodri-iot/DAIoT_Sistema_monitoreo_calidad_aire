@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Comando por defecto para iniciar la app
-CMD ["npm", "start"]
+CMD node seed.js && npm start

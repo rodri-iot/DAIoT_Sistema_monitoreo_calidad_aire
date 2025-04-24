@@ -8,7 +8,8 @@ import './Dashboard.css';
 
 function Dashboard() {
   const [sensores, setSensores] = useState([]);
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = window.env?.VITE_API_URL || 'http://192.168.0.193:3000/api';
+
 
   useEffect(() => {
     const fetchData = async () => {
