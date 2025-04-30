@@ -32,4 +32,7 @@ build/
 # Certificados TLS
 mosquitto/certs/*.key
 mosquitto/certs/*.crt
-hardware/certs/*.h
+
+# Certificados TLS/hardware
+hardware/src/certs/*.pem
+hardware/src/certs/*.h

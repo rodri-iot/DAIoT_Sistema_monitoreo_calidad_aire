@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
@@ -23,7 +25,7 @@ function SensorCharts({ sensor }) {
           labels: sensor.lecturas.map(e => new Date(e.timestamp).toLocaleTimeString()),
           datasets: [{
             label: 'Temperatura (°C)',
-            data: sensor.lecturas.map(e => e.temperatura),
+            data: (sensor.lecturas.map(e => e.temperatura)).slice(-20),
             borderColor: '#f44336',
             backgroundColor: 'rgba(244, 67, 54, 0.2)',
             tension: 0.3,
