@@ -2,16 +2,21 @@
 
 # 🌱 Sistema de Monitoreo de Calidad del Aire
 
-**Autor:** Ing. Rodrigo J. Pinedo Nava  
-**Especialización:** Internet de las Cosas (IoT)  
-**Institución:** Facultad de Ingeniería – Universidad de Buenos Aires (FIUBA)  
-**Fecha:** Abril 2025
+- **Autor:** Ing. Rodrigo J. Pinedo Nava
+- **LinkedIn** ([Link al perfil](https://www.linkedin.com/in/rodrigopinedo/))
+- **Especialización:** Internet de las Cosas (IoT)  
+- **Institución:** Facultad de Ingeniería – Universidad de Buenos Aires (FIUBA)  
+- **Fecha:** Abril 2025
 
 ---
 
 ## 📌 Descripción del Proyecto
 
-Este proyecto propone el desarrollo de un sistema IoT para el monitoreo ambiental, enfocado en la medición de **temperatura**, **presión atmosférica** y otros parámetros asociados a la calidad del aire. El sistema está construido sobre una arquitectura distribuida utilizando microcontroladores ESP32 y contenedores Docker, con despliegue previsto en una instancia de Google Cloud Platform (GCP).
+Este proyecto propone el desarrollo de un sistema IoT para el monitoreo ambiental, enfocado en la medición de parámetros ambientales asociados a la calidad del aire. El sistema está construido sobre una arquitectura distribuida utilizando microcontroladores ESP32 y contenedores Docker.
+
+## 📌 Primera versión implementada
+
+En esta primera etapa se desarrolla la arquitectura en general, logrando mostrar las mediciones de temperatura y presión tomadas por una ESP32. Se plantea que a futuro se desarrollaran todos los aspectos del sistema de monitoreo y de todos los parámetros ambientales necesarios.
 
 ---
 
@@ -34,7 +39,6 @@ Este proyecto propone el desarrollo de un sistema IoT para el monitoreo ambienta
 - MongoDB + Mongoose
 - React + Vite + MaterializeCSS
 - Docker + Docker Compose
-- GCP (Google Cloud Platform)
 
 ---
 
@@ -57,19 +61,26 @@ Este proyecto propone el desarrollo de un sistema IoT para el monitoreo ambienta
    ```bash
    git clone https://github.com/tu-usuario/proyecto-iot-calidad-aire.git
    cd proyecto-iot-calidad-aire
+   ```
 
 2. **Generar certificados TLS**
 
-cd docker/mosquitto
-./generate_certs.sh <192.XXX.X.XXX>
+   ``` bash
+   cd docker/mosquitto
+   ./generate_certs.sh <192.XXX.X.XXX>
+   ```
 
 3. **Levantar los servicios**
 
-docker compose up --build
+   ```bash
+   docker compose up --build
+   ```
 
 4. Acceder al dashboard
 
- http://localhost:5173
+   ```Web
+   http://localhost:5173
+   ```
 
 🧪 **Simulación de Sensores**
 
@@ -90,10 +101,3 @@ Para fines de desarrollo, el ESP32 genera datos simulados cada 30 segundos utili
 🌍 **Despliegue en la Nube**
 
 El sistema está diseñado para ser desplegado en una instancia de Google Cloud Platform (Compute Engine con IP estática), con posibilidad de escalar nodos sensores y habilitar balanceadores de carga si es necesario.
-
-✍️ **Autor**
-
-Rodrigo J. Pinedo Nava
-Candidato a Especialista en Internet de las Cosas
-📍 Buenos Aires, Argentina
-🔗 LinkedIn ([Link al perfil](https://www.linkedin.com/in/rodrigopinedo/))
